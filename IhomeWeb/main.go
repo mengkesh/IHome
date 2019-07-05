@@ -7,6 +7,7 @@ import (
         "github.com/micro/go-web"
         "github.com/julienschmidt/httprouter"
         _ "IHome/IhomeWeb/models"
+    "IHome/IhomeWeb/handler"
 )
 
 func main() {
@@ -24,9 +25,11 @@ func main() {
     rou:=httprouter.New()
     //映射静态页面
     rou.NotFound=http.FileServer(http.Dir("html"))
-
+	//获取地域信息
+	rou.GET("api/v1.0/areas",handler.GetArea)
 	// 注册服务
 	service.Handle("/", rou)
+
 
 
 	// 运行服务
